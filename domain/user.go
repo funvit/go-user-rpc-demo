@@ -10,17 +10,17 @@ import (
 
 // User model
 type User struct {
-	ID          uuid.UUID
-	Login       string
-	RegistredAt time.Time
+	ID           uuid.UUID
+	Login        string
+	RegisteredAt time.Time
 }
 
 // CreateNewUser implements creating new entity of User
 func CreateNewUser(login string) *User {
 	return &User{
-		ID:          uuid.New(),
-		Login:       login,
-		RegistredAt: time.Now(),
+		ID:           uuid.New(),
+		Login:        login,
+		RegisteredAt: time.Now(),
 	}
 }
 
