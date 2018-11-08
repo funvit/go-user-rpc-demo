@@ -46,7 +46,7 @@ func main() {
 		)
 	}
 	if *mongodbConnStr != "" {
-		logrus.Infof(fmt.Sprintf("Using mongodb %s with database '%s'", *mongodbConnStr, *mongodbDatabaseName))
+		logrus.Infof("Using mongodb %s with database '%s'", *mongodbConnStr, *mongodbDatabaseName)
 		userServer = servers.NewUserServer(
 			repository.NewUserRepositoryMongo(
 				*mongodbConnStr,
