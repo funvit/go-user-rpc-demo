@@ -6,22 +6,22 @@ import (
 	errors "github.com/pkg/errors"
 )
 
-type UserRepositoryFakeDB struct {
+type UserRepositoryInmem struct {
 	table map[uuid.UUID]domain.User
 }
 
-func NewUserRepositoryFakeDB() *UserRepositoryFakeDB {
-	return &UserRepositoryFakeDB{
+func NewUserRepositoryInmem() *UserRepositoryInmem {
+	return &UserRepositoryInmem{
 		table: make(map[uuid.UUID]domain.User),
 	}
 }
 
-func (db *UserRepositoryFakeDB) SaveUser(user domain.User) error {
+func (db *UserRepositoryInmem) SaveUser(user domain.User) error {
 	db.table[user.ID] = user
 	return nil
 }
 
-func (db *UserRepositoryFakeDB) GetUserByID(id uuid.UUID) (*domain.User, error) {
+func (db *UserRepositoryInmem) GetUserByID(id uuid.UUID) (*domain.User, error) {
 	if user, ok := db.table[id]; ok {
 		return &user, nil
 	}

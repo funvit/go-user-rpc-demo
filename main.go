@@ -1,25 +1,37 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
+	"github.com/funvit/go-user-rpc-demo/infrastructure/repository"
+	"github.com/funvit/go-user-rpc-demo/servers"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/rpc"
 	"github.com/gorilla/rpc/json"
-
-	apprpc "github.com/funvit/go-user-rpc-demo/rpc"
+	"github.com/sirupsen/logrus"
 )
 
+const port int = 1234
+
 func main() {
+	logrus.SetLevel(logrus.InfoLevel)
+
 	s := rpc.NewServer()
 
 	s.RegisterCodec(json.NewCodec(), "application/json")
 	s.RegisterCodec(json.NewCodec(), "application/json;charset=UTF-8")
 
-	userRPC := new(apprpc.UserRpc)
+	userServer := servers.NewUserServer(
+		// &repository.UserRepositoryMongodb{},
+		repository.NewUserRepositoryInmem(),
+	)
 
-	s.RegisterService(userRPC, "")
+	s.RegisterService(userServer, "")
 	r := mux.NewRouter()
 	r.Handle("/rpc", s)
-	http.ListenAndServe(":1234", r)
+	fmt.Printf("Json-RPC on localhost:%d\n", port)
+	if err := http.ListenAndServe(fmt.Sprintf(":%d", port), r); err != nil {
+		panic(err)
+	}
 }

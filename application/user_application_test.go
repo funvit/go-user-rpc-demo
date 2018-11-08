@@ -16,7 +16,7 @@ func init() {
 func TestUserApplicationAddGetUpdate(t *testing.T) {
 	// logrus.SetLevel(logrus.DebugLevel)
 	appCtx := application.Context{
-		UserRepo: repository.NewUserRepositoryFakeDB(),
+		UserRepo: repository.NewUserRepositoryInmem(),
 	}
 	var _userId uuid.UUID
 
@@ -64,7 +64,7 @@ func TestUserApplicationAddGetUpdate(t *testing.T) {
 func TestUserApplicationGetNotExist(t *testing.T) {
 	// logrus.SetLevel(logrus.DebugLevel)
 	appCtx := application.Context{
-		UserRepo: repository.NewUserRepositoryFakeDB(),
+		UserRepo: repository.NewUserRepositoryInmem(),
 	}
 	userId := uuid.New()
 
@@ -80,7 +80,7 @@ func TestUserApplicationGetNotExist(t *testing.T) {
 func TestUserApplicationAddWithEmptyLoginMustReturnError(t *testing.T) {
 	// logrus.SetLevel(logrus.DebugLevel)
 	appCtx := application.Context{
-		UserRepo: repository.NewUserRepositoryFakeDB(),
+		UserRepo: repository.NewUserRepositoryInmem(),
 	}
 
 	// add

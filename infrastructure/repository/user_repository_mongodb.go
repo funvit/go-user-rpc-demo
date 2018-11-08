@@ -27,7 +27,7 @@ func (db *UserRepositoryMongodb) SaveUser(user domain.User) error {
 }
 
 //GetUserByID implements get user from DB
-func (db *UserRepositoryMongodb) GetUserByID(ID uuid.UUID) (*domain.User, error) {
+func (db *UserRepositoryMongodb) GetUserByID(id uuid.UUID) (*domain.User, error) {
 	return nil, errors.Wrap(
 		errors.New("not implemented"),
 		repoName)
