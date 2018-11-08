@@ -15,7 +15,7 @@ type UserServerAddResult struct {
 }
 
 func (rpc *UserServer) AddUser(r *http.Request, args *UserServerAddArgs, result *UserServerAddResult) error {
-	logrus.Debugf("Adding user with login '%s'", args.Login)
+	logrus.Debugf("UserServer: Adding user with login '%s'", args.Login)
 
 	user, err := rpc.AppContext.AddUser(args.Login)
 	if err == nil {

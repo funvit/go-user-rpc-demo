@@ -17,7 +17,7 @@ type UserServerUpdateResult struct {
 }
 
 func (rpc *UserServer) UpdateUser(r *http.Request, args *UserServerUpdateArgs, result *UserServerUpdateResult) error {
-	logrus.Debugf("Updating user %s with login '%s'", args.ID, args.Login)
+	logrus.Debugf("UserServer: Updating user %s with login '%s'", args.ID, args.Login)
 
 	ok, err := rpc.AppContext.UpdateUserLogin(args.ID, args.Login)
 	if err == nil {

@@ -6,6 +6,7 @@ import (
 )
 
 type UserRepository interface {
-	SaveUser(user domain.User) error
+	AddUser(user domain.User) error
+	UpdateUser(user domain.User) (bool, error)
 	GetUserByID(id uuid.UUID) (*domain.User, error)
 }

@@ -69,8 +69,8 @@ func TestUserApplicationGetNotExist(t *testing.T) {
 	userId := uuid.New()
 
 	user, err := appCtx.GetUser(userId)
-	if err == nil {
-		t.Error("get non-exist user must return error")
+	if err != nil {
+		t.Error("get non-exist user must not return error")
 	}
 	if user != nil {
 		t.Error("get not-exist user must return nil as User")

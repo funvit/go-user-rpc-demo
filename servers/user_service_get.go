@@ -23,7 +23,7 @@ type UserServerGetResult struct {
 }
 
 func (rpc *UserServer) GetUser(r *http.Request, args *UserServerGetArgs, result *UserServerGetResult) error {
-	logrus.Debugf("Getting user by id=%s", args.ID)
+	logrus.Debugf("UserServer: Getting user by id=%s", args.ID)
 
 	user, err := rpc.AppContext.GetUser(args.ID)
 	if err == nil {

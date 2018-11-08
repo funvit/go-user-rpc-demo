@@ -13,52 +13,56 @@ type Context struct {
 }
 
 func (c *Context) AddUser(login string) (*domain.User, error) {
-	logrus.Debugf("adding user '%s'", login)
+	logrus.Debugf("Application: adding user '%s'", login)
 	user := domain.CreateNewUser(login)
 	if err := user.Validate(); err != nil {
 		return nil, err
 	}
 
-	if err := c.UserRepo.SaveUser(*user); err != nil {
+	if err := c.UserRepo.AddUser(*user); err != nil {
 		return nil, err
 	} else {
-		logrus.Debugf("added user '%s', new ID=%s", user.Login, user.ID)
+		logrus.Debugf("Application: added user '%s', new ID=%s", user.Login, user.ID)
 		return user, nil
 	}
 }
 
 func (c *Context) GetUser(id uuid.UUID) (*domain.User, error) {
-	logrus.Debugf("getting user by id=%s", id)
+	logrus.Debugf("Application: getting user by id=%s", id)
 	if user, err := c.UserRepo.GetUserByID(id); err != nil {
-		logrus.Warnf("cant get user with id=%s, error=%s", id, err)
-		return nil, errors.New("user not found")
+		logrus.Warnf("Application: cant get user with id=%s, error=%s", id, err)
+		return nil, errors.New("database error")
 	} else {
-		logrus.Debugf("got user '%s' by id=%s", user.Login, id)
+		if user == nil {
+			return nil, nil
+		}
+
+		logrus.Debugf("Application: got user '%s' by id=%s", user.Login, id)
 		return user, nil
 	}
 }
 
 func (c *Context) UpdateUserLogin(id uuid.UUID, newLogin string) (bool, error) {
-	logrus.Debugf("updating user by id=%s login to '%s'", id, newLogin)
+	logrus.Debugf("Application: updating user by id=%s login to '%s'", id, newLogin)
 	// get user
 	if user, getErr := c.UserRepo.GetUserByID(id); getErr == nil {
 		user.Login = newLogin
 		//validate
 		if validateErr := user.Validate(); validateErr == nil {
 			// save (update)
-			if saveErr := c.UserRepo.SaveUser(*user); saveErr == nil {
-				return true, nil
+			if ok, saveErr := c.UserRepo.UpdateUser(*user); saveErr == nil {
+				return ok, nil
 			} else {
-				logrus.Errorf("user %s update error: %s", id, saveErr)
-				// hide db error
-				return false, errors.New("update failed")
+				logrus.Errorf("Application: user %s update error: %s", id, saveErr)
+				// hide real db error
+				return false, errors.New("database error")
 			}
 		} else {
-			logrus.Errorf("user %s validatation error: %s", id, validateErr)
+			logrus.Errorf("Application: user %s validatation error: %s", id, validateErr)
 			return false, validateErr
 		}
 	} else {
-		logrus.Errorf("user %s get error: %s", id, getErr)
+		logrus.Errorf("Application: user %s get error: %s", id, getErr)
 		return false, getErr
 	}
 }
