@@ -1,4 +1,4 @@
-package main_test
+package application_test
 
 import (
 	"testing"
@@ -6,9 +6,14 @@ import (
 	"github.com/funvit/go-user-rpc-demo/application"
 	"github.com/funvit/go-user-rpc-demo/infrastructure/repository"
 	"github.com/google/uuid"
+	"github.com/sirupsen/logrus"
 )
 
-func TestUserRpcAddGetUpdate(t *testing.T) {
+func init() {
+	logrus.SetLevel(logrus.PanicLevel)
+}
+
+func TestUserApplicationAddGetUpdate(t *testing.T) {
 	// logrus.SetLevel(logrus.DebugLevel)
 	appCtx := application.Context{
 		UserRepo: repository.NewUserRepositoryFakeDB(),
@@ -56,7 +61,7 @@ func TestUserRpcAddGetUpdate(t *testing.T) {
 	}
 }
 
-func TestUserRpcGetNotExist(t *testing.T) {
+func TestUserApplicationGetNotExist(t *testing.T) {
 	// logrus.SetLevel(logrus.DebugLevel)
 	appCtx := application.Context{
 		UserRepo: repository.NewUserRepositoryFakeDB(),
@@ -69,5 +74,21 @@ func TestUserRpcGetNotExist(t *testing.T) {
 	}
 	if user != nil {
 		t.Error("get not-exist user must return nil as User")
+	}
+}
+
+func TestUserApplicationAddWithEmptyLoginMustReturnError(t *testing.T) {
+	// logrus.SetLevel(logrus.DebugLevel)
+	appCtx := application.Context{
+		UserRepo: repository.NewUserRepositoryFakeDB(),
+	}
+
+	// add
+	if user, addErr := appCtx.AddUser(""); addErr == nil {
+		t.Error("must return error")
+	} else {
+		if user != nil {
+			t.Error("must return user as nil")
+		}
 	}
 }
