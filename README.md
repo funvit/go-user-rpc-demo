@@ -4,5 +4,5 @@
 
 ![Travis CI](https://travis-ci.org/funvit/go-user-rpc-demo.svg?branch=master)
 
-Реализовать gRPC "Пользователь".
+Реализовать RPC "Пользователь".
 
