@@ -1,0 +1,14 @@
+language: go
+
+go:
+  - 1.11
+
+install:
+  - go get github.com/google/uuid
+  - go get github.com/pkg/errors
+  - go get github.com/gorilla/mux
+  - go get github.com/gorilla/rpc
+  - go get github.com/gorilla/rpc/json
+  - go get github.com/sirupsen/logrus
+  - go get github.com/mongodb/mongo-go-driver/bson
+  - go get github.com/mongodb/mongo-go-driver/mongo

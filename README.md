@@ -2,5 +2,7 @@
 Решение тестового задания
 -------------------------
 
-Реализовать gRPC "Пользователь".
+![Travis CI](https://travis-ci.org/funvit/go-user-rpc-demo.svg?branch=master)
+
+Реализовать RPC "Пользователь".
 
