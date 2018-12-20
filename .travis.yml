@@ -1,4 +1,4 @@
-dist: precise
+#dist: precise
 
 language: go
 
@@ -15,5 +15,6 @@ install:
   - go get github.com/mongodb/mongo-go-driver/bson
   - go get github.com/mongodb/mongo-go-driver/mongo
 
-script: make
-#go test -race -v ./application ./domain && go build -v -a
+#script: make
+#script: go test -race -v ./application ./domain && go build -v -a
+script: go build -v
