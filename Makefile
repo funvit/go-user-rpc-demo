@@ -1,7 +1,7 @@
 
 
 default:
-	go test ./application ./domain ./servers
-	go build
+	go test -race -v ./application ./domain ./servers
+	go build -v
 
 
