@@ -17,4 +17,4 @@ install:
 
 #script: make
 #script: go test -race -v ./application ./domain && go build -v -a
-script: go test -race -v ./application ./domain
+script: go test -race -v ./application
